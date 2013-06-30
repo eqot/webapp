@@ -37,6 +37,10 @@ module.exports = function (grunt) {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass:server']
             },
+            jst: {
+                files: ['<%= yeoman.app %>/scripts/templates/*.html'],
+                tasks: ['jst']
+            },
             livereload: {
                 options: {
                     livereload: LIVERELOAD_PORT
@@ -111,6 +115,7 @@ module.exports = function (grunt) {
             all: [
                 'Gruntfile.js',
                 '<%= yeoman.app %>/scripts/{,*/}*.js',
+                '!<%= yeoman.app %>/scripts/templates/*.js',
                 '!<%= yeoman.app %>/scripts/vendor/*',
                 'test/spec/{,*/}*.js'
             ]
@@ -297,14 +302,17 @@ module.exports = function (grunt) {
         concurrent: {
             server: [
                 'compass',
-                'coffee:dist'
+                'coffee:dist',
+                'jst'
             ],
             test: [
-                'coffee'
+                'coffee',
+                'jst'
             ],
             dist: [
                 'coffee',
                 'compass',
+                'jst',
                 'imagemin',
                 'svgmin',
                 'htmlmin'
@@ -316,6 +324,16 @@ module.exports = function (grunt) {
             },
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+            }
+        },
+        jst: {
+            options: {
+                amd: true
+            },
+            compile: {
+                files: {
+                    '<%= yeoman.app %>/scripts/templates/templates.js': ['<%= yeoman.app %>/scripts/templates/*.html']
+                }
             }
         }
     });

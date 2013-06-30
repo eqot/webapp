@@ -2,8 +2,8 @@
 define([
 	'jquery',
 	'backbone',
-	'underscore'
-], function ($, Backbone) {
+    'templates/templates'
+], function ($, Backbone, Templates) {
 	'use strict';
 
 	var MyView = Backbone.View.extend({
@@ -11,7 +11,14 @@ define([
 
 		initialize: function () {
 			console.log('MyView');
-		}
+
+            this.render();
+		},
+
+        render: function () {
+            var template = Templates['app/scripts/templates/test.html']();
+            this.$el.html(template);
+        }
 	});
 
 	return MyView;
