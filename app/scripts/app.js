@@ -1,6 +1,12 @@
 /*global define */
-define([], function () {
+define(['views/view', 'models/model'], function (MyView, MyModel) {
     'use strict';
 
-    return '\'Allo \'Allo!';
+    var MyApp = function () {
+        var model = new MyModel();
+        new MyView({model: model});
+    };
+
+    return MyApp;
+
 });
